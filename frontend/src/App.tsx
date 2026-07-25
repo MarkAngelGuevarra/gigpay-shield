@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { connectLace, getConnectedAPI } from './lib/midnight';
+import { connectLace, getConnectedAPI, disconnectLace } from './lib/midnight';
 import { buildProviders } from './lib/providers';
 import { findDeployedContract } from '@midnight-ntwrk/midnight-js-contracts';
 import { CompiledContract } from '@midnight-ntwrk/midnight-js-protocol/compact-js';
@@ -26,6 +26,13 @@ function App() {
       console.error(err);
       setStatus(`Failed to connect: ${err.message}`);
     }
+  };
+
+  const handleDisconnect = () => {
+    disconnectLace();
+    setAddress('');
+    setStatus('Wallet disconnected.');
+    setTxId('');
   };
 
   const handleCreateGig = async (e: React.FormEvent) => {
@@ -94,6 +101,7 @@ function App() {
             <span className="address" title={address}>
               {address.slice(0, 15)}...{address.slice(-10)}
             </span>
+            <button className="btn btn-disconnect" onClick={handleDisconnect}>Disconnect</button>
           </div>
 
           <h2>Create Shielded Gig</h2>
