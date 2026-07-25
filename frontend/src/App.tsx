@@ -83,9 +83,31 @@ function App() {
   return (
     <div className="container">
       <header>
+        <div className="logo-icon">🛡️</div>
         <h1>GigPay Shield</h1>
         <p className="subtitle">Privacy-first Escrow on Midnight</p>
       </header>
+
+      <div className="hero">
+        <div className="hero-section">
+          <div className="hero-label hero-label--problem">⚠️ The Problem</div>
+          <p className="hero-text">
+            Traditional blockchain escrow exposes <strong>payment amounts</strong> and <strong>wallet identities</strong> on a public ledger — leaving freelancers and clients with zero financial privacy.
+          </p>
+        </div>
+        <div className="hero-divider"></div>
+        <div className="hero-section">
+          <div className="hero-label hero-label--solution">✅ Our Solution</div>
+          <p className="hero-text">
+            GigPay Shield uses <strong>Zero-Knowledge proofs</strong> on Midnight to keep payment amounts and identities completely private. Only the project name and escrow count are disclosed on-chain — everything else stays hidden.
+          </p>
+        </div>
+        <div className="hero-features">
+          <span className="hero-chip">🔒 Private Amounts</span>
+          <span className="hero-chip">🕵️ Hidden Identities</span>
+          <span className="hero-chip">✨ ZK Proven</span>
+        </div>
+      </div>
       
       {!address ? (
         <div className="card text-center">
