@@ -1,14 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-dark: #0f172a;
-  --bg-card: rgba(30, 41, 59, 0.7);
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --accent: #3b82f6;
-  --accent-hover: #2563eb;
-  --success: #10b981;
-  --border: rgba(255, 255, 255, 0.1);
+  --bg-dark: #0a0e1a;
+  --bg-card: rgba(22, 30, 52, 0.85);
+  --bg-input: rgba(10, 14, 26, 0.5);
+  --text-primary: #e8ecf4;
+  --text-secondary: #7a85a0;
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --accent-glow: rgba(99, 102, 241, 0.35);
+  --success: #22c55e;
+  --danger: #ef4444;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-focus: rgba(99, 102, 241, 0.5);
 }
 
 * {
@@ -18,204 +22,277 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', -apple-system, sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-primary);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.15), transparent 25%);
+  background-image:
+    radial-gradient(ellipse 60% 40% at 20% 60%, rgba(99, 102, 241, 0.12), transparent),
+    radial-gradient(ellipse 50% 50% at 80% 25%, rgba(34, 197, 94, 0.08), transparent),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(99, 102, 241, 0.06), transparent);
 }
 
+/* ── Layout ── */
 .container {
   width: 100%;
-  max-width: 500px;
-  padding: 2rem;
+  max-width: 480px;
+  padding: 1.5rem;
 }
 
+/* ── Header ── */
 header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  background: linear-gradient(135deg, #818cf8 0%, #a78bfa 50%, #c084fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
 }
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
+/* ── Card ── */
 .card {
   background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  padding: 1.75rem;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.03) inset,
+    0 20px 50px -15px rgba(0, 0, 0, 0.6);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.05) inset,
+    0 25px 60px -15px rgba(0, 0, 0, 0.7);
 }
 
 .text-center {
   text-align: center;
 }
 
+/* ── Typography inside cards ── */
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
 }
 
-p {
+.card > p {
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  font-size: 0.9rem;
 }
 
+/* ── Wallet Info Bar ── */
+.wallet-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  padding: 0.65rem 0.85rem;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.badge {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--success);
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.address {
+  font-family: 'Courier New', monospace;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Buttons ── */
 .btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.4rem;
+  font-size: 0.9rem;
   font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
+  letter-spacing: 0.01em;
 }
 
 .btn-primary {
-  background-color: var(--accent);
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
   color: white;
-  box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
+  box-shadow: 0 4px 16px var(--accent-glow);
 }
 
 .btn-primary:hover {
-  background-color: var(--accent-hover);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.23);
+  box-shadow: 0 6px 24px var(--accent-glow);
   transform: translateY(-1px);
+  filter: brightness(1.1);
 }
 
 .btn-primary:active {
   transform: translateY(1px);
+  box-shadow: 0 2px 8px var(--accent-glow);
 }
 
 .btn-disconnect {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.75rem;
-  background: rgba(255, 80, 80, 0.15);
-  color: #ff6b6b;
-  border: 1px solid rgba(255, 80, 80, 0.3);
-  border-radius: 6px;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
-  margin-left: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: inherit;
 }
 
 .btn-disconnect:hover {
-  background: rgba(255, 80, 80, 0.3);
-  color: #fff;
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
 }
 
 .w-full {
   width: 100%;
 }
 
-.status {
-  margin-top: 1rem;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-}
-
-.wallet-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.badge {
-  background: rgba(16, 185, 129, 0.2);
-  color: var(--success);
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.address {
-  font-family: monospace;
-  color: var(--text-secondary);
-  background: rgba(0,0,0,0.2);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.875rem;
-}
-
+/* ── Form ── */
 .form-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.1rem;
   text-align: left;
 }
 
 label {
   display: block;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 input {
   width: 100%;
-  padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 0.65rem 0.85rem;
+  background: var(--bg-input);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  color: white;
+  border-radius: 10px;
+  color: var(--text-primary);
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition: all 0.2s ease;
 }
 
 input:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  background: rgba(10, 14, 26, 0.7);
+}
+
+input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+/* ── Status & Alerts ── */
+.status {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
 }
 
 .alert {
-  padding: 1rem;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   word-break: break-all;
+  line-height: 1.5;
+}
+
+.alert strong {
+  color: var(--text-primary);
+}
+
+.alert code {
+  color: #a5b4fc;
+  font-size: 0.75rem;
 }
 
 .alert-success {
-  background: rgba(16, 185, 129, 0.1);
-  border-color: rgba(16, 185, 129, 0.3);
-  color: #a7f3d0;
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.alert-success strong {
+  color: #86efac;
 }
 
 .mt-4 {
   margin-top: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .container {
+    padding: 1rem;
+  }
+  .card {
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+  h1 {
+    font-size: 1.75rem;
+  }
+  .wallet-info {
+    flex-wrap: wrap;
+  }
 }
