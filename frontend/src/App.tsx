@@ -75,10 +75,10 @@ function App() {
       const { shieldedCoinPublicKey } = await api.getShieldedAddresses();
 
       const tx = await deployed.callTx.createShieldedGig(
-        projectName,
+        projectName.padEnd(32, ' ').slice(0, 32),
         BigInt(amount),
-        shieldedCoinPublicKey,
-        freelancerPubKey
+        String(shieldedCoinPublicKey).padEnd(32, ' ').slice(0, 32),
+        String(freelancerPubKey).padEnd(32, ' ').slice(0, 32)
       );
 
       setStatus(`Gig created successfully!`);
