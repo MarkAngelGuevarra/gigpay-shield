@@ -3,7 +3,7 @@ import { connectLace, getConnectedAPI, disconnectLace } from './lib/midnight';
 import { buildProviders } from './lib/providers';
 import { findDeployedContract } from '@midnight-ntwrk/midnight-js-contracts';
 import { CompiledContract } from '@midnight-ntwrk/midnight-js-protocol/compact-js';
-import { Contract } from './managed/gigpay/contract/index.js';
+import { Contract } from './managed/gigpay/contract/index';
 import './index.css';
 
 function App() {
