@@ -6,7 +6,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "compile": "wsl -d Ubuntu -e bash -c \"source ~/.local/bin/env && compact compile contracts/gigpay.compact contracts/managed/gigpay\"",
+    "compile": "wsl -d Ubuntu --cd C:/Users/Mark/Documents/antigravity/nifty-tesla/gigpay-shield -e bash -c \"source ~/.local/bin/env && compact compile contracts/gigpay.compact contracts/managed/gigpay\"",
     "build": "npx tsc --noEmit || true",
     "setup": "npx tsx src/setup.ts",
     "deploy": "npx tsx src/deploy.ts",

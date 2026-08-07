@@ -1,0 +1,6 @@
+2026/07/21-00:34:03.170 220c Recovering log #27
+2026/07/21-00:34:03.170 220c Level-0 table #29: started
+2026/07/21-00:34:03.170 220c Level-0 table #29: 403 bytes OK
+2026/07/21-00:34:03.170 220c Delete type=0 #27
+2026/07/21-00:34:03.170 220c Delete type=3 #26
+2026/07/21-00:34:03.170 3b8c Moved #11 to level-1 342 bytes OK: files[ 3 4 0 0 0 0 0 ]

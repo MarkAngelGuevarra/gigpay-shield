@@ -8,7 +8,7 @@ import './index.css';
 
 function App() {
   const [address, setAddress] = useState<string>('');
-  const [contractAddress, setContractAddress] = useState<string>('e90f198f85c9e1981f7171271b746dc09941c972a3a111d4dc82440c219d83fd');
+  const [contractAddress, setContractAddress] = useState<string>('028d7023c0bf3366ccdd09320d3de33b3a0df470295191c959779ab626883f3e1b');
   const [projectName, setProjectName] = useState('My Shielded Gig');
   const [amount, setAmount] = useState('100');
   const [freelancerPubKey, setFreelancerPubKey] = useState('mn_addr_undeployed1h3ssm5ru2t6eqy4g3she78zlxn96e36ms6pq996aduvmateh9p9sk96u7s');
@@ -18,7 +18,13 @@ function App() {
   const handleConnect = async () => {
     try {
       setStatus('Connecting to Lace...');
-      const api = await connectLace('preview');
+      // Try preprod first (matches deployed contract), fall back to preview
+      let api;
+      try {
+        api = await connectLace('preprod');
+      } catch {
+        api = await connectLace('preview');
+      }
       const addrs = await api.getUnshieldedAddress();
       setAddress(addrs.unshieldedAddress);
       setStatus('Connected!');
@@ -52,12 +58,16 @@ function App() {
       );
 
       setStatus('Finding deployed contract...');
-      const deployed = await findDeployedContract(providers, {
+      const findPromise = findDeployedContract(providers, {
         compiledContract: compiledContract as any,
         contractAddress,
         privateStateId: 'gigpayPrivateState',
         initialPrivateState: {},
       });
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Contract not found — check that the Contract Address matches your wallet network (Preprod).')), 30000)
+      );
+      const deployed = await Promise.race([findPromise, timeoutPromise]) as any;
 
       setStatus('Proving circuit locally & submitting transaction...');
       

@@ -20,11 +20,13 @@ async function main(): Promise<void> {
 
   process.stdout.write(`\n→ Setting up gigpay-shield on network: ${network}\n\n`);
 
-  // 1. Bring up only the services this network needs.
-  run('docker', ['compose', 'up', '-d', '--wait', ...config.composeServices]);
+  // 1. Bring up only the services this network needs (skip for preview as we use public endpoints)
+  if (network !== 'preview') {
+    run('docker', ['compose', 'up', '-d', '--wait', ...config.composeServices]);
+  }
 
   // 2. Compile the contract (network-agnostic).
-  run('npm', ['run', 'compile']);
+  // run('npm', ['run', 'compile']);
 
   // 3. Deploy. Forward --network so deploy.ts sees the same network.
   const deployArgs = network === 'undeployed' ? [] : ['--', '--network', network];
