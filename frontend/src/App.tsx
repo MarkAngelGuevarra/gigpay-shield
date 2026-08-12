@@ -32,9 +32,9 @@ function App() {
     attemptAutoConnect();
   }, []);
 
-  const handleConnect = async (isAutoConnect = false) => {
+  const handleConnect = async (isAutoConnect: boolean | any = false) => {
     try {
-      if (!isAutoConnect) setStatus('Connecting to Lace...');
+      if (isAutoConnect !== true) setStatus('Connecting to Lace...');
       // Try preprod first (matches deployed contract), fall back to preview
       let api;
       try {
