@@ -66,7 +66,7 @@ export const buildProviders = async (api: WalletConnectedAPI): Promise<MidnightP
   };
 
   const zkConfigProvider = new BrowserZKConfigProvider('/gigpay');
-  const publicDataProvider = indexerPublicDataProvider(config.indexerUri, config.indexerWsUri);
+  const publicDataProvider = indexerPublicDataProvider(config.indexerUri, config.indexerWsUri, window.WebSocket as any);
   // Optional: you can use api.getProvingProvider(zkConfigProvider.asKeyMaterialProvider()) if you want to use Lace's proving server!
   // Let's use the local one for now:
   const proofProvider = httpClientProofProvider(config.proverServerUri || "https://proof-server.preprod.midnight.network", zkConfigProvider); 
