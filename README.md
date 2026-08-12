@@ -1,8 +1,25 @@
 # gigpay-shield
 
+[![CI](https://github.com/MarkAngelGuevarra/gigpay-shield/actions/workflows/ci.yml/badge.svg)](https://github.com/MarkAngelGuevarra/gigpay-shield/actions/workflows/ci.yml)
+
+## Level 3 Submission Details
+*   **Live Demo:** [https://gigpay-shield-green.vercel.app](https://gigpay-shield-green.vercel.app)
+*   **Contract Address (Preprod Testnet):** `025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31`
+*   **Product Proposal:** Private Payroll / Splits
+*   **Demo Video:** *(Pending - Link to be inserted by user)*
+
+### Product Proposal: Private Payroll / Splits
+GigPay Shield perfectly implements the "Private Payroll / Splits" product proposal. It enables clients and freelancers to set up an escrow payment agreement (a gig) without exposing the payment amounts, the identities (public keys) of the parties involved, or the specific financial flow on the public blockchain.
+
+### Privacy Model: What an observer can and cannot learn
+*   **What an observer CAN learn:** By looking at the public blockchain, an observer can only see that a transaction occurred, the `activeEscrowCount` (how many total gigs are active in the system), and the `lastProjectName` (the name of the last created gig, which is explicitly disclosed).
+*   **What an observer CANNOT learn:** The payment amount (in tNIGHT), the client's public key, and the freelancer's public key. These are strictly kept as private ZK witnesses. The circuit guarantees that the math checks out and that the escrow is fully funded, but the financial data is completely hidden from the public ledger until settlement.
+
+---
+
 ## Level 2 Submission Details
 *   **Live Demo:** [https://gigpay-shield-green.vercel.app](https://gigpay-shield-green.vercel.app)
-*   **Contract Address (Preprod Testnet):** 025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31
+*   **Contract Address (Preprod Testnet):** `025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31`
 
 ## Level 1 Submission Details
 *   **Contract Address (Preprod Testnet):** `e90f198f85c9e1981f7171271b746dc09941c972a3a111d4dc82440c219d83fd`
