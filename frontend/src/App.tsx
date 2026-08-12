@@ -75,16 +75,41 @@ function App() {
       );
 
       setStatus('Finding deployed contract...');
-      const findPromise = findDeployedContract(providers, {
-        compiledContract: compiledContract as any,
-        contractAddress,
-        privateStateId: 'gigpayPrivateState',
-        initialPrivateState: {},
-      });
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Contract not found — check that the Contract Address matches your wallet network (Preprod).')), 30000)
-      );
-      const deployed = await Promise.race([findPromise, timeoutPromise]) as any;
+      let deployed: any = null;
+      const MAX_RETRIES = 2;
+      for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+        try {
+          if (attempt > 0) setStatus(`Finding contract... (Retry ${attempt}/${MAX_RETRIES})`);
+          
+          const findPromise = findDeployedContract(providers, {
+            compiledContract: compiledContract as any,
+            contractAddress,
+            privateStateId: 'gigpayPrivateState',
+            initialPrivateState: {},
+          });
+          
+          const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Network Timeout: The Preprod indexer is unresponsive (504 Gateway Timeout). The public testnet might be congested.')), 20000)
+          );
+          
+          deployed = await Promise.race([findPromise, timeoutPromise]) as any;
+          break; // success
+        } catch (err: any) {
+          const msg = String(err.message || err);
+          const isGenuineNotFound = msg.toLowerCase().includes('not found') && !msg.includes('Network Timeout');
+          
+          if (isGenuineNotFound) {
+            throw new Error('Contract not found — check that the Contract Address matches your wallet network (Preprod).');
+          }
+          
+          if (attempt === MAX_RETRIES) {
+            throw err;
+          }
+          
+          // Brief delay before retrying
+          await new Promise(r => setTimeout(r, 2000));
+        }
+      }
 
       setStatus('Proving circuit locally & submitting transaction...');
       
