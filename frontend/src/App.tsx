@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { connectLace, getConnectedAPI, disconnectLace } from './lib/midnight';
 import { buildProviders } from './lib/providers';
 import { findDeployedContract } from '@midnight-ntwrk/midnight-js-contracts';
@@ -15,9 +15,26 @@ function App() {
   const [status, setStatus] = useState<string>('');
   const [txId, setTxId] = useState<string>('');
 
-  const handleConnect = async () => {
+  // Auto-connect to Lace if already authorized
+  useEffect(() => {
+    const attemptAutoConnect = async () => {
+      // Small delay to ensure the window.midnight object is injected by the extension
+      setTimeout(async () => {
+        if (window.midnight) {
+          try {
+            await handleConnect(true);
+          } catch (e) {
+            // Silently fail auto-connect so the user can click the button manually
+          }
+        }
+      }, 500);
+    };
+    attemptAutoConnect();
+  }, []);
+
+  const handleConnect = async (isAutoConnect = false) => {
     try {
-      setStatus('Connecting to Lace...');
+      if (!isAutoConnect) setStatus('Connecting to Lace...');
       // Try preprod first (matches deployed contract), fall back to preview
       let api;
       try {
