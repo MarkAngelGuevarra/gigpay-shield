@@ -2,7 +2,7 @@
 
 ## Level 2 Submission Details
 *   **Live Demo:** [https://gigpay-shield-green.vercel.app](https://gigpay-shield-green.vercel.app)
-*   **Contract Address (Preprod Testnet):** 02812d354bfca36af57a916327ab4c1075dbbb7bf27d7f7762a0dc4d75d506d9
+*   **Contract Address (Preprod Testnet):** 025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31
 
 ## Level 1 Submission Details
 *   **Contract Address (Preprod Testnet):** `e90f198f85c9e1981f7171271b746dc09941c972a3a111d4dc82440c219d83fd`

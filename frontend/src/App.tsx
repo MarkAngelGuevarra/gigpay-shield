@@ -8,7 +8,7 @@ import './index.css';
 
 function App() {
   const [address, setAddress] = useState<string>('');
-  const [contractAddress, setContractAddress] = useState<string>('02812d354bfca36af57a916327ab4c1075dbbb7bf27d7f7762a0dc4d75d506d9');
+  const [contractAddress, setContractAddress] = useState<string>('025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31');
   const [projectName, setProjectName] = useState('My Shielded Gig');
   const [amount, setAmount] = useState('100');
   const [freelancerPubKey, setFreelancerPubKey] = useState('mn_addr_undeployed1h3ssm5ru2t6eqy4g3she78zlxn96e36ms6pq996aduvmateh9p9sk96u7s');

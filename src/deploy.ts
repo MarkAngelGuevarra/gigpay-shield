@@ -352,6 +352,29 @@ async function main() {
 
   if (!deployed) throw new Error('Deployment failed after all retries');
 
+  console.log('Contract submitted to mempool!');
+  console.log('Contract Address:', deployed.deployTxData.public.contractAddress);
+  console.log('Waiting for network to index the contract (this can take up to 2 minutes)...');
+
+  // Wait for the indexer to see it so we don't exit and drop the WebSocket connection prematurely
+  while (true) {
+    try {
+      await import('@midnight-ntwrk/midnight-js-contracts').then(m => m.findDeployedContract(providers, {
+        compiledContract: compiledContract as any,
+        contractAddress: deployed!.deployTxData.public.contractAddress,
+        privateStateId: PRIVATE_STATE_ID,
+        initialPrivateState: {},
+      }));
+      break;
+    } catch (e: any) {
+      if (!e.message.includes('not found')) throw e;
+      await new Promise(r => setTimeout(r, 5000));
+      process.stdout.write('.');
+    }
+  }
+
+  console.log('\nContract deployed and indexed successfully!');
+
   const contractAddress = deployed.deployTxData.public.contractAddress;
   console.log('  ✅ Contract deployed successfully!\n');
   console.log(`  Contract Address: ${contractAddress}\n`);
