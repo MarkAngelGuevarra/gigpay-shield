@@ -2,8 +2,15 @@
 
 [![CI](https://github.com/MarkAngelGuevarra/gigpay-shield/actions/workflows/ci.yml/badge.svg)](https://github.com/MarkAngelGuevarra/gigpay-shield/actions/workflows/ci.yml)
 
+## Level 4 (Waxing Gibbous) Submission Details
+*   **Live Preprod Demo:** [https://gigpay-shield-green.vercel.app](https://gigpay-shield-green.vercel.app)
+*   **Contract Address (Preprod Testnet):** `025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31`
+*   **Product X Profile:** [@GigPayShield](https://x.com/GigPayShield)
+*   **Demo Video:** *(Pending - Link to be inserted by user)*
+
+---
+
 ## Level 3 Submission Details
-*   **Live Demo:** [https://gigpay-shield-green.vercel.app](https://gigpay-shield-green.vercel.app)
 *   **Contract Address (Preprod Testnet):** `025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31`
 *   **Product Proposal:** Private Payroll / Splits
 *   **Demo Video:** *(Pending - Link to be inserted by user)*
@@ -43,23 +50,44 @@ We use Midnight's `disclose()` function to explicitly choose what goes public:
 *   **Public:** The ledger just stores the `activeEscrowCount` and `lastProjectName`. This proves the contract is being used, but keeps the juicy details off the chain.
 *   **Private:** The payment amount, client public key, and freelancer public key are strictly kept as private ZK witnesses. The circuit proves the math checks out without ever publishing the financial data.
 
-## Quick start
+## 🚀 Setup Instructions
 
-Requirements: Node 22, Docker (with Compose v2), and the Compact compiler at the version pinned in `.compact-version` at the create-mn-app repo root (the version this project was scaffolded against).
+Requirements: Node.js (v22+), Docker (with Compose v2), and the Compact compiler.
 
+### 1. Installation
+Clone the repository and install the dependencies:
 ```bash
+git clone https://github.com/MarkAngelGuevarra/gigpay-shield.git
+cd gigpay-shield
 npm install
-npm run setup
-npm run test:e2e
 ```
 
-`npm run setup` runs end-to-end with no prompts:
+### 2. Local Environment Setup
+To run the MVP locally for testing, we provide a quick setup script that handles the local Midnight devnet, compiles the contract, and deploys it automatically.
+```bash
+npm run setup
+```
+*(This command starts a local Midnight node, indexer, and proof-server via Docker, compiles `contracts/gigpay.compact`, and deploys it using a genesis-seed wallet.)*
 
-1. `docker compose up -d --wait` — starts a local Midnight devnet (node, indexer, proof-server) and blocks until all three pass their healthchecks.
-2. `npm run compile` — compiles `contracts/hello-world.compact` to `contracts/managed/hello-world/`.
-3. `npm run deploy` — derives the genesis-seed wallet (NIGHT pre-minted), registers UTXOs for DUST generation, deploys the contract, writes `.midnight-state.json`.
+### 3. Run the Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-`npm run test:e2e` reconnects to the deployed contract and reads its ledger state. Exits 0 if the contract is live and indexable.
+---
+
+## 📖 Usage Guide
+
+GigPay Shield is designed to be simple and privacy-first. Here is how to use the live dApp on the Preprod network:
+
+1. **Connect Wallet:** Ensure you have the [Lace Wallet extension](https://www.lace.io/) installed and set to the Midnight Preprod Network. Click "Connect Lace" in the top right of the dApp.
+2. **Prepare Gig Details:** Enter a project name (e.g., "Website Redesign"), the escrow amount in tNIGHT, and the freelancer's public key.
+3. **Create Shielded Gig:** Click the "Create Gig" button. 
+4. **Sign Transaction:** Your Lace Wallet will pop up. You will notice that the sensitive data (payment amounts and public keys) are masked and executed as a Zero-Knowledge Proof. Sign the transaction to finalize the escrow.
+
+---
 
 ## Local devnet
 
