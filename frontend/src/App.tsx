@@ -6,6 +6,8 @@ import { CompiledContract } from '@midnight-ntwrk/midnight-js-protocol/compact-j
 import { Contract } from './managed/gigpay/contract/index';
 import './index.css';
 
+let isConnecting = false;
+
 function App() {
   const [address, setAddress] = useState<string>('');
   const [contractAddress, setContractAddress] = useState<string>('0300a8927e163b2f518861ffbf113b2eeb7ed042da4936d07d1a29de7e0342eb');
@@ -20,7 +22,7 @@ function App() {
     const attemptAutoConnect = async () => {
       // Small delay to ensure the window.midnight object is injected by the extension
       setTimeout(async () => {
-        if (window.midnight) {
+        if (window.midnight && !getConnectedAPI() && !isConnecting) {
           try {
             await handleConnect(true);
           } catch (e) {
@@ -33,7 +35,10 @@ function App() {
   }, []);
 
   const handleConnect = async (isAutoConnect: boolean | any = false) => {
+    if (isConnecting) return;
+
     try {
+      isConnecting = true;
       if (isAutoConnect !== true) setStatus('Connecting to Lace...');
       
       // Connect specifically to the Preview network where our new contract lives.
@@ -51,6 +56,8 @@ function App() {
       }
       
       setStatus(`Failed to connect: ${errorMessage}`);
+    } finally {
+      isConnecting = false;
     }
   };
 
