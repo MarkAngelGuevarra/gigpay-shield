@@ -47,6 +47,17 @@ function hexToBytes(hex: string): Uint8Array {
 export const buildProviders = async (api: WalletConnectedAPI): Promise<MidnightProviders> => {
   const config = await api.getConfiguration();
   
+  // Fallback: Midnight's shared public Preprod indexer (returned by Lace's
+  // getConfiguration()) is known to be intermittently unavailable / 504s.
+  // If a Blockfrost project ID is configured, route indexer queries through
+  // Blockfrost's hosted Midnight indexer instead, which still targets the
+  // real Preprod chain but on more reliable infrastructure.
+  const blockfrostProjectId = import.meta.env.VITE_BLOCKFROST_PROJECT_ID as string | undefined;
+  if (blockfrostProjectId) {
+    config.indexerUri = `https://midnight-preprod.blockfrost.io/api/v0?project_id=${blockfrostProjectId}`;
+    config.indexerWsUri = `wss://midnight-preprod.blockfrost.io/api/v0/ws?project_id=${blockfrostProjectId}`;
+  }
+  
   // Fake a wallet provider that delegates balancing to Lace.
   const walletProvider = {
     getCoinPublicKey: (): CoinPublicKey => {
