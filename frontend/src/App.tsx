@@ -35,19 +35,24 @@ function App() {
   const handleConnect = async (isAutoConnect: boolean | any = false) => {
     try {
       if (isAutoConnect !== true) setStatus('Connecting to Lace...');
-      // Try preprod first (matches deployed contract), fall back to preview
-      let api;
-      try {
-        api = await connectLace('preprod');
-      } catch {
-        api = await connectLace('preview');
-      }
+      
+      // Connect specifically to the Preprod network where our contract lives.
+      // We do not fallback to 'preview' because rapid-fire connection attempts
+      // are known to bug out the Lace extension and return a false 'locked' state.
+      const api = await connectLace('preprod');
+      
       const addrs = await api.getUnshieldedAddress();
       setAddress(addrs.unshieldedAddress);
       setStatus('Connected!');
     } catch (err: any) {
       console.error(err);
-      setStatus(`Failed to connect: ${err.message}`);
+      let errorMessage = err.message || String(err);
+      
+      if (errorMessage.includes('locked')) {
+        errorMessage += " (If your wallet is unlocked, please hard refresh the page [F5] and try again)";
+      }
+      
+      setStatus(`Failed to connect: ${errorMessage}`);
     }
   };
 
