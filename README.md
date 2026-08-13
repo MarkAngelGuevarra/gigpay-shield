@@ -3,15 +3,15 @@
 [![CI](https://github.com/MarkAngelGuevarra/gigpay-shield/actions/workflows/ci.yml/badge.svg)](https://github.com/MarkAngelGuevarra/gigpay-shield/actions/workflows/ci.yml)
 
 ## Level 4 (Waxing Gibbous) Submission Details
-*   **Live Preprod Demo:** [https://gigpay-shield-green.vercel.app](https://gigpay-shield-green.vercel.app)
-*   **Contract Address (Preprod Testnet):** `025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31`
+*   **Live Preview Demo:** [https://gigpay-shield-green.vercel.app](https://gigpay-shield-green.vercel.app)
+*   **Contract Address (Preview Testnet):** `0300a8927e163b2f518861ffbf113b2eeb7ed042da4936d07d1a29de7e0342eb`
 *   **Product X Profile:** [@GigPayShield](https://x.com/GigPayShield)
 *   **Demo Video:** *(Pending - Link to be inserted by user)*
 
 ---
 
 ## Level 3 Submission Details
-*   **Contract Address (Preprod Testnet):** `025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31`
+*   **Contract Address (Preview Testnet):** `0300a8927e163b2f518861ffbf113b2eeb7ed042da4936d07d1a29de7e0342eb`
 *   **Product Proposal:** Private Payroll / Splits
 *   **Demo Video:** *(Pending - Link to be inserted by user)*
 
@@ -80,9 +80,9 @@ npm run dev
 
 ## 📖 Usage Guide
 
-GigPay Shield is designed to be simple and privacy-first. Here is how to use the live dApp on the Preprod network:
+GigPay Shield is designed to be simple and privacy-first. Here is how to use the live dApp on the Preview network:
 
-1. **Connect Wallet:** Ensure you have the [Lace Wallet extension](https://www.lace.io/) installed and set to the Midnight Preprod Network. Click "Connect Lace" in the top right of the dApp.
+1. **Connect Wallet:** Ensure you have the [Lace Wallet extension](https://www.lace.io/) installed and set to the Midnight Preview Network. Click "Connect Lace" in the top right of the dApp.
 2. **Prepare Gig Details:** Enter a project name (e.g., "Website Redesign"), the escrow amount in tNIGHT, and the freelancer's public key.
 3. **Create Shielded Gig:** Click the "Create Gig" button. 
 4. **Sign Transaction:** Your Lace Wallet will pop up. You will notice that the sensitive data (payment amounts and public keys) are masked and executed as a Zero-Knowledge Proof. Sign the transaction to finalize the escrow.
