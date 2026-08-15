@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { connectLace, getConnectedAPI, disconnectLace } from './lib/midnight';
 import { buildProviders } from './lib/providers';
 import { findDeployedContract } from '@midnight-ntwrk/midnight-js-contracts';
@@ -17,45 +17,23 @@ function App() {
   const [status, setStatus] = useState<string>('');
   const [txId, setTxId] = useState<string>('');
 
-  // Auto-connect to Lace if already authorized
-  useEffect(() => {
-    const attemptAutoConnect = async () => {
-      // Small delay to ensure the window.midnight object is injected by the extension
-      setTimeout(async () => {
-        if (window.midnight && !getConnectedAPI() && !isConnecting) {
-          try {
-            await handleConnect(true);
-          } catch (e) {
-            // Silently fail auto-connect so the user can click the button manually
-          }
-        }
-      }, 500);
-    };
-    attemptAutoConnect();
-  }, []);
-
-  const handleConnect = async (isAutoConnect: boolean | any = false) => {
+  const handleConnect = async () => {
     if (isConnecting) return;
 
     try {
       isConnecting = true;
-      if (isAutoConnect !== true) setStatus('Connecting to Lace...');
+      setStatus('Connecting to Lace...');
       
-      // Connect specifically to the Preview network where our new contract lives.
+      // Connect specifically to the Preview network where our contract lives
       const api = await connectLace('preview');
       
       const addrs = await api.getUnshieldedAddress();
       setAddress(addrs.unshieldedAddress);
       setStatus('Connected!');
     } catch (err: any) {
-      console.error(err);
-      let errorMessage = err.message || String(err);
-      
-      if (errorMessage.includes('locked')) {
-        errorMessage += " (If your wallet is unlocked, please hard refresh the page [F5] and try again)";
-      }
-      
-      setStatus(`Failed to connect: ${errorMessage}`);
+      console.error('Wallet connection error:', err);
+      const errorMessage = err.message || String(err);
+      setStatus(errorMessage);
     } finally {
       isConnecting = false;
     }
@@ -99,7 +77,7 @@ function App() {
           });
           
           const timeoutPromise = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('Network Timeout: The Preprod indexer is unresponsive (504 Gateway Timeout). The public testnet might be congested.')), 20000)
+            setTimeout(() => reject(new Error('Network Timeout: The Preview indexer is unresponsive (504 Gateway Timeout). The public testnet might be congested.')), 20000)
           );
           
           deployed = await Promise.race([findPromise, timeoutPromise]) as any;
@@ -109,7 +87,7 @@ function App() {
           const isGenuineNotFound = msg.toLowerCase().includes('not found') && !msg.includes('Network Timeout');
           
           if (isGenuineNotFound) {
-            throw new Error('Contract not found — check that the Contract Address matches your wallet network (Preprod).');
+            throw new Error('Contract not found — check that the Contract Address matches your wallet network (Preview).');
           }
           
           if (attempt === MAX_RETRIES) {
