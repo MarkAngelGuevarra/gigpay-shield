@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { connectLace, getConnectedAPI, disconnectLace } from './lib/midnight';
+import { connectLace, getConnectedAPI, disconnectLace, formatWalletError } from './lib/midnight';
 import { buildProviders } from './lib/providers';
 import { findDeployedContract } from '@midnight-ntwrk/midnight-js-contracts';
 import { CompiledContract } from '@midnight-ntwrk/midnight-js-protocol/compact-js';
@@ -32,7 +32,8 @@ function App() {
       setStatus('Connected!');
     } catch (err: any) {
       console.error('Wallet connection error:', err);
-      const errorMessage = err.message || String(err);
+      // Format the error using our unified formatter to ensure helpful user guidance
+      const errorMessage = formatWalletError(err, 'preview');
       setStatus(errorMessage);
     } finally {
       isConnecting = false;
