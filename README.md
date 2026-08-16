@@ -1,80 +1,61 @@
-# gigpay-shield
+# GigPay Shield
 
 [![CI](https://github.com/MarkAngelGuevarra/gigpay-shield/actions/workflows/ci.yml/badge.svg)](https://github.com/MarkAngelGuevarra/gigpay-shield/actions/workflows/ci.yml)
 
-## Level 4 (Waxing Gibbous) Submission Details
-*   **Live Preview Demo:** [https://gigpay-shield-green.vercel.app](https://gigpay-shield-green.vercel.app)
-*   **Contract Address (Preview Testnet):** `0300a8927e163b2f518861ffbf113b2eeb7ed042da4936d07d1a29de7e0342eb`
-*   **Product X Profile:** [@GigPayShield](https://x.com/GigPayShield)
-*   **Demo Video:** *(Pending - Link to be inserted by user)*
+> Privacy-first escrow platform built on Midnight.
 
----
+## Live Demo
+[https://gigpay-shield-green.vercel.app](https://gigpay-shield-green.vercel.app)
 
-## Level 3 Submission Details
-*   **Contract Address (Preview Testnet):** `0300a8927e163b2f518861ffbf113b2eeb7ed042da4936d07d1a29de7e0342eb`
-*   **Product Proposal:** Private Payroll / Splits
-*   **Demo Video:** *(Pending - Link to be inserted by user)*
+## Contract Address
+| Network | Address |
+|----------|--------------------------------------|
+| Preview | `0300a8927e163b2f518861ffbf113b2eeb7ed042da4936d07d1a29de7e0342eb` |
 
-### Product Proposal: Private Payroll / Splits
-GigPay Shield perfectly implements the "Private Payroll / Splits" product proposal. It enables clients and freelancers to set up an escrow payment agreement (a gig) without exposing the payment amounts, the identities (public keys) of the parties involved, or the specific financial flow on the public blockchain.
-
-### Privacy Model: What an observer can and cannot learn
-*   **What an observer CAN learn:** By looking at the public blockchain, an observer can only see that a transaction occurred, the `activeEscrowCount` (how many total gigs are active in the system), and the `lastProjectName` (the name of the last created gig, which is explicitly disclosed).
-*   **What an observer CANNOT learn:** The payment amount (in tNIGHT), the client's public key, and the freelancer's public key. These are strictly kept as private ZK witnesses. The circuit guarantees that the math checks out and that the escrow is fully funded, but the financial data is completely hidden from the public ledger until settlement.
-
----
-
-## Level 2 Submission Details
-*   **Live Demo:** [https://gigpay-shield-green.vercel.app](https://gigpay-shield-green.vercel.app)
-*   **Contract Address (Preprod Testnet):** `025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31`
-
-## Level 1 Submission Details
-*   **Contract Address (Preprod Testnet):** `e90f198f85c9e1981f7171271b746dc09941c972a3a111d4dc82440c219d83fd`
-*   **Network:** `preprod` (Preprod Network)
-
-### Screenshots
-**1. Successful Compile Output (Circuits Listed)**
-![Compile Output](./compile.png)
-
-**2. Contract Deployed with Address Shown**
-![Deploy Output](./deploy.png)
-
-
-## What is this?
+## What This Product Does
 GigPay Shield is a privacy-focused escrow app on Midnight. It lets freelancers and clients set up escrow contracts without leaking the payment amounts or their identities on the public ledger. 
 
 We use ZK proofs to guarantee the escrow logic runs correctly, but the only things that actually get published on-chain are the project's name and a basic counter of how many escrows are active. Everything else (amounts, public keys) stays hidden.
 
-## Public vs Private Data
-We use Midnight's `disclose()` function to explicitly choose what goes public:
-*   **Public:** The ledger just stores the `activeEscrowCount` and `lastProjectName`. This proves the contract is being used, but keeps the juicy details off the chain.
-*   **Private:** The payment amount, client public key, and freelancer public key are strictly kept as private ZK witnesses. The circuit proves the math checks out without ever publishing the financial data.
+## Privacy Model
+- **What is PUBLIC (on-chain, anyone can see):** The total active escrow count and the latest project name.
+- **What is PRIVATE (private witness, never on-chain):** The payment amounts, the client's public key, and the freelancer's public key.
+- **What the user PROVES without revealing:** The user proves that the escrow is fully funded and logically sound without revealing the actual financial value.
 
-## 🚀 Setup Instructions
+## Tech Stack
+Midnight network, Compact language, Node.js v22, React/Vite, Lace wallet
 
-Requirements: Node.js (v22+), Docker (with Compose v2), and the Compact compiler.
+## Prerequisites
+- Node.js (v22+)
+- Docker (with Compose v2)
+- Compact compiler
+- Lace Wallet extension (Midnight Preview Network)
 
-### 1. Installation
-Clone the repository and install the dependencies:
+## Setup & Run Locally
+1. Clone the repository: `git clone https://github.com/MarkAngelGuevarra/gigpay-shield.git`
+2. Install dependencies: `npm install`
+3. Setup local devnet & deploy: `npm run setup`
+4. Run frontend: `cd frontend && npm install && npm run dev`
+
+## Run Tests
 ```bash
-git clone https://github.com/MarkAngelGuevarra/gigpay-shield.git
-cd gigpay-shield
-npm install
+npm run test:e2e
 ```
 
-### 2. Local Environment Setup
-To run the MVP locally for testing, we provide a quick setup script that handles the local Midnight devnet, compiles the contract, and deploys it automatically.
-```bash
-npm run setup
-```
-*(This command starts a local Midnight node, indexer, and proof-server via Docker, compiles `contracts/gigpay.compact`, and deploys it using a genesis-seed wallet.)*
+## CI/CD
+The `.github/workflows/ci.yml` pipeline automatically runs on every push and pull request. It checks out the code, installs dependencies, compiles the Compact contract, and runs the test suite to ensure the build remains stable.
 
-### 3. Run the Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
+## Usage Guide
+See `docs/USAGE.md` for a full step-by-step guide.
+
+## Product X Profile
+[@GigPayShield](https://x.com/GigPayShield)
+
+## Product Proposal
+See `PROPOSAL.md`
+
+## Demo Video
+*(Pending - Demo video link to be added here)*
 
 ---
 
