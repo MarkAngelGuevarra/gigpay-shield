@@ -67,10 +67,20 @@ export const buildProviders = async (api: WalletConnectedAPI): Promise<MidnightP
   };
 
   const zkConfigProvider = new BrowserZKConfigProvider('/gigpay');
-  const publicDataProvider = indexerPublicDataProvider(config.indexerUri, config.indexerWsUri, window.WebSocket as any);
+
+  // Apply Blockfrost override if VITE_BLOCKFROST_PROJECT_ID is provided
+  const blockfrostProjectId = import.meta.env.VITE_BLOCKFROST_PROJECT_ID;
+  const indexerUri = blockfrostProjectId 
+    ? `https://midnight-preprod.blockfrost.network/api/v1?project_id=${blockfrostProjectId}`
+    : config.indexerUri;
+  const indexerWsUri = blockfrostProjectId
+    ? `wss://midnight-preprod.blockfrost.network/ws/api/v1?project_id=${blockfrostProjectId}`
+    : config.indexerWsUri;
+
+  const publicDataProvider = indexerPublicDataProvider(indexerUri, indexerWsUri, window.WebSocket as any);
   // Optional: you can use api.getProvingProvider(zkConfigProvider.asKeyMaterialProvider()) if you want to use Lace's proving server!
   // Let's use the local one for now:
-  const proofProvider = httpClientProofProvider(config.proverServerUri || "https://proof-server.preview.midnight.network", zkConfigProvider);
+  const proofProvider = httpClientProofProvider(config.proverServerUri || "https://proof-server.preprod.midnight.network", zkConfigProvider);
 
   return {
     privateStateProvider: {

@@ -10,7 +10,7 @@ let isConnecting = false;
 
 function App() {
   const [address, setAddress] = useState<string>('');
-  const [contractAddress, setContractAddress] = useState<string>('0300a8927e163b2f518861ffbf113b2eeb7ed042da4936d07d1a29de7e0342eb');
+  const [contractAddress, setContractAddress] = useState<string>('025e9e0fc416c117d3b0c51d6c8b939f60f64c126d408ebafb973a961bd4bd31');
   const [projectName, setProjectName] = useState('My Shielded Gig');
   const [amount, setAmount] = useState('100');
   const [freelancerPubKey, setFreelancerPubKey] = useState('mn_addr_undeployed1h3ssm5ru2t6eqy4g3she78zlxn96e36ms6pq996aduvmateh9p9sk96u7s');
@@ -24,8 +24,8 @@ function App() {
       isConnecting = true;
       setStatus('Connecting to Lace...');
       
-      // Connect specifically to the Preview network where our contract lives
-      const api = await connectLace('preview');
+      // Connect specifically to the Preprod network where our contract lives
+      const api = await connectLace('preprod');
       console.log('[DEBUG] connectLace succeeded, api object:', api);
       
       const addrs = await api.getUnshieldedAddress();
