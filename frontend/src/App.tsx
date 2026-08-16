@@ -26,8 +26,10 @@ function App() {
       
       // Connect specifically to the Preview network where our contract lives
       const api = await connectLace('preview');
+      console.log('[DEBUG] connectLace succeeded, api object:', api);
       
       const addrs = await api.getUnshieldedAddress();
+      console.log('[DEBUG] getUnshieldedAddress succeeded:', addrs);
       setAddress(addrs.unshieldedAddress);
       setStatus('Connected!');
     } catch (err: any) {
