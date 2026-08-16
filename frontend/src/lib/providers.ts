@@ -71,10 +71,10 @@ export const buildProviders = async (api: WalletConnectedAPI): Promise<MidnightP
   // Apply Blockfrost override if VITE_BLOCKFROST_PROJECT_ID is provided
   const blockfrostProjectId = import.meta.env.VITE_BLOCKFROST_PROJECT_ID;
   const indexerUri = blockfrostProjectId 
-    ? `https://midnight-preprod.blockfrost.network/api/v1?project_id=${blockfrostProjectId}`
+    ? `https://midnight-preprod.blockfrost.io/api/v0?project_id=${blockfrostProjectId}`
     : config.indexerUri;
   const indexerWsUri = blockfrostProjectId
-    ? `wss://midnight-preprod.blockfrost.network/ws/api/v1?project_id=${blockfrostProjectId}`
+    ? `wss://midnight-preprod.blockfrost.io/api/v0/ws?project_id=${blockfrostProjectId}`
     : config.indexerWsUri;
 
   const publicDataProvider = indexerPublicDataProvider(indexerUri, indexerWsUri, window.WebSocket as any);
