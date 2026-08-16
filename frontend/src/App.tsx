@@ -35,7 +35,7 @@ function App() {
     } catch (err: any) {
       console.error('Wallet connection error:', err);
       // Format the error using our unified formatter to ensure helpful user guidance
-      const errorMessage = formatWalletError(err, 'preview');
+      const errorMessage = formatWalletError(err, 'preprod');
       setStatus(errorMessage);
     } finally {
       isConnecting = false;
@@ -80,7 +80,7 @@ function App() {
           });
           
           const timeoutPromise = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('Network Timeout: The Preview indexer is unresponsive (504 Gateway Timeout). The public testnet might be congested.')), 20000)
+            setTimeout(() => reject(new Error('Network Timeout: The Preprod indexer is unresponsive (504 Gateway Timeout). The public testnet might be congested.')), 20000)
           );
           
           deployed = await Promise.race([findPromise, timeoutPromise]) as any;
@@ -90,7 +90,7 @@ function App() {
           const isGenuineNotFound = msg.toLowerCase().includes('not found') && !msg.includes('Network Timeout');
           
           if (isGenuineNotFound) {
-            throw new Error('Contract not found — check that the Contract Address matches your wallet network (Preview).');
+            throw new Error('Contract not found — check that the Contract Address matches your wallet network (Preprod).');
           }
           
           if (attempt === MAX_RETRIES) {
