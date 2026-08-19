@@ -22,7 +22,7 @@ function App() {
 
     try {
       isConnecting = true;
-      setStatus('Connecting to Lace...');
+      setStatus('Connecting to Wallet...');
       
       // Connect specifically to the Preprod network where our contract lives
       const api = await connectLace('preprod');
@@ -155,8 +155,8 @@ function App() {
       {!address ? (
         <div className="card text-center">
           <h2>Connect your Wallet</h2>
-          <p>Please connect your Lace Midnight wallet to continue.</p>
-          <button className="btn btn-primary" onClick={handleConnect}>Connect Lace</button>
+          <p>Please connect your Midnight wallet (Lace or 1AM) to continue.</p>
+          <button className="btn btn-primary" onClick={handleConnect}>Connect Wallet</button>
           <p className="status">{status}</p>
         </div>
       ) : (

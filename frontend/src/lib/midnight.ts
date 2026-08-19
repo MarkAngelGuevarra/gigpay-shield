@@ -33,7 +33,8 @@ export const getLaceInitialAPI = (): InitialAPI | null => {
     const nameLower = provider?.name?.toLowerCase() || '';
     const rdnsLower = provider?.rdns?.toLowerCase() || '';
     return (
-      (keyLower.includes('lace') || nameLower.includes('lace') || rdnsLower.includes('lace')) &&
+      (keyLower.includes('lace') || nameLower.includes('lace') || rdnsLower.includes('lace') ||
+       keyLower.includes('1am') || nameLower.includes('1am') || rdnsLower.includes('1am')) &&
       typeof provider?.connect === 'function'
     );
   });
@@ -74,7 +75,7 @@ export const waitForLace = async (
   }
 
   throw new Error(
-    'Midnight Lace Wallet extension is not detected. Please ensure the extension is installed, enabled, and the page has been refreshed.'
+    'No compatible Midnight wallet (Lace or 1AM) detected. Please ensure your wallet extension is installed, enabled, and the page has been refreshed.'
   );
 };
 
@@ -86,9 +87,9 @@ export const formatWalletError = (err: any, networkId = 'preview'): string => {
   const msgLower = msg.toLowerCase();
 
   if (msgLower.includes('locked')) {
-    return `Lace Wallet reports locked or dormant for network "${networkId}". Please open your Lace extension, verify the network selector is set to "${
+    return `Wallet reports locked or dormant for network "${networkId}". Please open your wallet extension, verify the network selector is set to "${
       networkId === 'preview' ? 'Midnight Preview' : networkId
-    }", unlock with your password, and click Connect again. (If issue persists, clear Authorized DApps in Lace Settings).`;
+    }", unlock with your password, and click Connect again.`;
   }
 
   if (
@@ -98,7 +99,7 @@ export const formatWalletError = (err: any, networkId = 'preview'): string => {
     msgLower.includes('cancelled') ||
     msgLower.includes('user reject')
   ) {
-    return 'Connection request was rejected or cancelled. Please authorize the connection in your Lace extension to proceed.';
+    return 'Connection request was rejected or cancelled. Please authorize the connection in your wallet extension to proceed.';
   }
 
   if (
@@ -106,11 +107,11 @@ export const formatWalletError = (err: any, networkId = 'preview'): string => {
     msgLower.includes('not installed') ||
     msgLower.includes('not available')
   ) {
-    return 'Midnight Lace Wallet extension was not found. Please install the Lace Midnight extension and refresh the page.';
+    return 'No compatible Midnight wallet was found. Please install a wallet (like Lace or 1AM) and refresh the page.';
   }
 
   if (msgLower.includes('network') || msgLower.includes('mismatch')) {
-    return `Network mismatch detected. Please switch your Lace wallet network to "${
+    return `Network mismatch detected. Please switch your wallet network to "${
       networkId === 'preview' ? 'Midnight Preview' : networkId
     }" and reconnect.`;
   }
@@ -164,7 +165,7 @@ export const connectLace = async (networkId = 'preview'): Promise<ConnectedAPI> 
       }
 
       if (!api) {
-        throw lastErr || new Error('Failed to establish connection with Lace wallet.');
+        throw lastErr || new Error('Failed to establish connection with wallet.');
       }
 
       // Query wallet configuration to confirm active network
